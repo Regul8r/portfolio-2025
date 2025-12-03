@@ -30,7 +30,7 @@ export default function Contact() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              jamesha.robinson@gmail.com
+              jamesha.s.robinson@gmail.com
             </motion.a>
 
             <motion.div
@@ -68,7 +68,7 @@ export default function Contact() {
             className="pt-12 border-t border-gray-800"
           >
             <p className="text-gray-500">
-              © 2024 Ja'Mesha Robinson. All rights reserved.
+              © 2025 Ja'Mesha Robinson. All rights reserved.
             </p>
           </motion.div>
         </motion.div>

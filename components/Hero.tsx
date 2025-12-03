@@ -14,35 +14,37 @@ export default function Hero() {
   const name = "JA'MESHA"
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
-  // Map images to each character (null = no pop-up)
   const letterInfo = [
-    "/badges/Portrait.png",              // J
-    "/badges/A.png",                     // A
-    null,                                // ' (apostrophe - no pop-up)
-    "/badges/Blake.png",                 // M
-    "/badges/PostIt.png",                // E
-    "/badges/MotivateApp.png",           // S
-    "/badges/Booniehat.png",             // H
-    "/badges/RegulatorsNationlogo.png",  // A
+    "/badges/Portrait.png",
+    "/badges/A.png",
+    null,
+    "/badges/Blake.png",
+    "/badges/MotivateApp.png",
+    "/badges/PostIt.png",
+    "/badges/Booniehat.png",
+    "/badges/RegulatorsNationlogo.png",
   ]
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-white to-gray-50">
+    <section 
+      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: '#F3F4F6' }}  // 👈 Inline style - should work!
+    >
       <div className="max-w-7xl w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="space-y-6"
+          className="space-y-12 md:space-y-16 lg:space-y-20"
         >
           {/* Interactive Name */}
-          <div className="relative flex justify-center md:justify-start items-center">
-          <motion.h1 
-  className={`${permanentMarker.className} tracking-tighter flex`}
-  style={{ 
-    fontSize: 'clamp(4rem, 15vw, 12rem)',
-    lineHeight: '1'
-  }}
+          <div className="relative flex justify-center md:justify-start items-center flex-wrap">
+            <motion.h1 
+              className={`${permanentMarker.className} flex flex-wrap justify-center md:justify-start`}
+              style={{ 
+                fontSize: 'clamp(3rem, 12vw, 12rem)',
+                lineHeight: '1.1'  // 👈 Removed letterSpacing
+              }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -51,70 +53,80 @@ export default function Hero() {
                 <motion.span
                   key={index}
                   className="relative inline-block cursor-pointer"
+                  style={{ 
+                    width: 'clamp(2rem, 8vw, 8rem)',  // 👈 Narrower = closer letters
+                    height: 'clamp(3rem, 12vw, 12rem)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
                   onHoverStart={() => setHoveredIndex(index)}
                   onHoverEnd={() => setHoveredIndex(null)}
-                  whileHover={{
-                    scale: 1.1,
-                    rotate: [0, -5, 5, -5, 0],
-                    color: "#666",
-                    transition: { duration: 0.5 }
-                  }}
                 >
-                  {letter}
+                  {/* Letter (fades out on hover) */}
+                  <motion.span
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{ opacity: hoveredIndex === index ? 0 : 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {letter}
+                  </motion.span>
                   
-                  {/* Pop-up that appears on hover (only if letterInfo exists) */}
+                  {/* Image (fades in on hover) */}
                   {hoveredIndex === index && letterInfo[index] && (
-  <motion.div
-    initial={{ scale: 0, rotate: -15, y: 20, opacity: 0 }}
-    animate={{ scale: 2, rotate: -8, y: -140, opacity: 1 }}
-    exit={{ scale: 0, rotate: -15, y: 20, opacity: 0 }}
-    transition={{ type: "spring", duration: 0.5 }}
-    className="absolute left-1/2 transform -translate-x-1/2 z-10"
-  >
-    <Image
-      src={letterInfo[index]}
-      alt="Badge"
-      width={400}
-      height={600}
-      className="drop-shadow-2xl"
-    />
-  </motion.div>
-)}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <Image
+                        src={letterInfo[index]}
+                        alt="Badge"
+                        width={200}
+                        height={300}
+                        className="drop-shadow-2xl object-contain max-w-full max-h-full"
+                      />
+                    </motion.div>
+                  )}
                 </motion.span>
               ))}
             </motion.h1>
           </div>
           
-          <motion.p 
-            className="text-xl md:text-2xl text-gray-600 max-w-2xl text-center md:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Creative Designer & Developer crafting beautiful digital experiences
-          </motion.p>
+          
 
-          <motion.div
+         
+
+{/* Buttons Container */}
+<motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex gap-4 pt-4 justify-center md:justify-start"
+            // <<< CHANGED pt-4 to pt-10 for more space below the hero content
+            className="flex flex-col sm:flex-row gap-3 pt-10 justify-center md:justify-start" 
           >
+            {/* 1. Case Study (Primary Button) */}
             <a 
               href="#projects" 
-              className="bg-black text-white px-8 py-4 rounded-full hover:bg-gray-800 transition-colors"
+              className="bg-black text-white px-5 py-2.5 rounded-lg transition-all text-center text-sm
+                hover:bg-gray-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
             >
-              View Work
+              Case Study
             </a>
+            
+            {/* 2. Get in Touch (Secondary Button) */}
             <a 
               href="#contact" 
-              className="border-2 border-black px-8 py-4 rounded-full hover:bg-black hover:text-white transition-colors"
+              className="border-2 border-black text-black px-5 py-2.5 rounded-lg transition-all text-center text-sm
+                hover:bg-black hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
             >
               Get in Touch
             </a>
           </motion.div>
         </motion.div>
-      </div>
+</div>
     </section>
   )
 }

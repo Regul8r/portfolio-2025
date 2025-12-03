@@ -1,19 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Image from 'next/image'
-
-interface Project {
-  id: string
-  title: string
-  category: string
-  description: string
-  image: string
-  year: string
-  tags: string[]
-  link: string
-}
+import { Project } from '@/types/project'
 
 interface ProjectsProps {
   projects: Project[]
@@ -22,33 +12,36 @@ interface ProjectsProps {
 export default function Projects({ projects }: ProjectsProps) {
   const [filter, setFilter] = useState('All')
   
-  const categories = ['All', ...new Set(projects.map(p => p.category))]
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(projects.map(p => p.category));
+    return ['All', ...Array.from(uniqueCategories)];
+  }, [projects]);
   
-  const filteredProjects = filter === 'All' 
-    ? projects 
-    : projects.filter(p => p.category === filter)
-
+  const filteredProjects = useMemo(() => {
+    return filter === 'All' 
+      ? projects 
+      : projects.filter(p => p.category === filter)
+  }, [filter, projects]);
+  
   return (
-    <section id="projects" className="min-h-screen py-20 px-6 bg-white">
+    <section id="projects" className="py-12 px-6 bg-gray-50"> 
       <div className="max-w-7xl mx-auto">
+        {/* Header: Ensure text is centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-8 text-center"
         >
-          <h2 className="text-5xl md:text-7xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
             Selected Work
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl">
-            Projects that showcase my approach to design and development.
-          </p>
         </motion.div>
 
-        {/* Filter Buttons */}
+        {/* Filter Buttons: Centered using justify-center */}
         <motion.div 
-          className="flex flex-wrap gap-4 mb-12"
+          className="flex flex-wrap gap-4 mb-6 justify-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -58,10 +51,10 @@ export default function Projects({ projects }: ProjectsProps) {
             <button
               key={category}
               onClick={() => setFilter(category)}
-              className={`px-6 py-3 rounded-full transition-colors ${
+              className={`px-4 py-2 rounded-full transition-colors ${
                 filter === category
-                  ? 'bg-black text-white'
-                  : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                  ? 'bg-black text-white text-sm'
+                  : 'bg-gray-100 text-gray-800 text-sm hover:bg-gray-200'
               }`}
             >
               {category}
@@ -69,44 +62,56 @@ export default function Projects({ projects }: ProjectsProps) {
           ))}
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Projects Grid: Single card, centered with smaller max-width */}
+        <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="group cursor-pointer"
             >
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                <div className="relative aspect-4/3 mb-6 overflow-hidden rounded-2xl bg-gray-100">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+              <a 
+                href={project.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all h-full"
+              >
                 
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-2xl font-bold group-hover:text-gray-600 transition-colors">
+                {/* Image Section */}
+                <div className="p-4"> 
+                    <div className="relative w-full aspect-[4/3] mb-0 overflow-hidden rounded-lg bg-gray-100 border border-gray-100 shadow-inner">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        key={project.image} 
+                      />
+                    </div>
+                </div>
+
+                {/* Content Section: Syntax corrected */}
+                <div className="p-4 pt-0 space-y-2 text-center">
+                  <div className="flex items-center justify-center space-x-2">
+                    <h3 className="text-xl font-bold group-hover:text-gray-600 transition-colors">
                       {project.title}
                     </h3>
-                    <span className="text-gray-500">{project.year}</span>
+                    <span className="text-gray-500 text-sm">({project.year})</span>
                   </div>
                   
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-sm">
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-2">
+                  {/* Tags: Centered using justify-center on the flex container */}
+                  <div className="flex flex-wrap gap-1 pt-1 justify-center">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-gray-100 text-sm rounded-full"
+                        className="px-2 py-0.5 bg-gray-100 text-sm rounded-full"
                       >
                         {tag}
                       </span>

@@ -1,34 +1,14 @@
 {
-    "projects": [
-      {
-        "id": "1",
-        "title": "E-Commerce Website",
-        "category": "App Design",
-        "description": "PT Motivator: Reimagining Army Fitness with UX/UI Design",
-        "image": "/projects/Cover_PTMotivator.png",
-        "year": "2024",
-        "tags": ["Figma", "App Design Prototype", "UI/UX"],
-        "link": "https://www.figma.com/proto/9Kr3QqKK3uX3PV0lxEInZ9/PT-MOTIVATOR-APP?content-scaling=fixed&kind=proto&node-id=30-653&page-id=20%3A364&scaling=scale-down"
-      },
-      {
-        "id": "2",
-        "title": "Brand Identity",
-        "category": "Branding",
-        "description": "Complete brand design for tech startup",
-        "image": "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&h=600&fit=crop",
-        "year": "2024",
-        "tags": ["Branding", "Logo", "Identity"],
-        "link": "https://example.com"
-      },
-      {
-        "id": "3",
-        "title": "SaaS Dashboard",
-        "category": "Web Design",
-        "description": "Analytics dashboard with data visualization",
-        "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-        "year": "2023",
-        "tags": ["Dashboard", "SaaS", "Analytics"],
-        "link": "https://example.com"
-      }
-    ]
-  }
+  "projects": [
+    {
+      "id": "1",
+      "title": "Inclusive Design Lab",
+      "category": "Web Design",
+      "description": "An interactive toolkit that helps designers experience accessibility challenges firsthand. Built after learning about design ethics at Duke.",
+      "image": "/projects/Inclusive.jpg",
+      "year": "2025",
+      "tags": ["React", "Next.js", "Accessibility", "Design Ethics"],
+      "link": "/inclusive-design-lab"
+    }
+  ]
+}
